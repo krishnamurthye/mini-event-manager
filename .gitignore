@@ -1,0 +1,5 @@
+.idea
+*/.next
+*/.swc
+node_modules
+*/node_module

@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: mini-event-server
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - JWT_SECRET=mini-event-secret
+      - EXPIRES_IN=1d
+    depends_on:
+      - web
+    networks:
+      - app-network
+    env_file:
+      - ./server/.env
+
+  web:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: mini-event-web
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
